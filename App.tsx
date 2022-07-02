@@ -1,9 +1,13 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Dashboard } from './src/screens/Dashboards';
+import { ThemeProvider } from 'styled-components'
+import theme from './src/global/theme/theme';
+import { Dashboard } from './src/screens/Dashboard';
+
 
 export default function App() {
   return (
-    <Dashboard />
+    <ThemeProvider theme={theme}>
+      <Dashboard />
+    </ThemeProvider>
   );
 }
