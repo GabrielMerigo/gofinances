@@ -6,6 +6,7 @@ import {
   Poppins_500Medium,
   Poppins_700Bold,
 } from '@expo-google-fonts/poppins';
+
 import AppLoading from 'expo-app-loading';
 import theme from './src/global/theme/theme';
 import { Dashboard } from './src/screens/Dashboard';
