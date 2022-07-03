@@ -1,32 +1,29 @@
-import * as Font from 'expo-font';
-import AppLoading from 'expo-app-loading';
-import React, { useState } from 'react';
-
-import useFonts from './hooks/useFonts';
-import { Dashboard } from './src/screens/Dashboard';
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
+import {
+  useFonts,
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_700Bold,
+} from '@expo-google-fonts/poppins';
+import AppLoading from 'expo-app-loading';
 import theme from './src/global/theme/theme';
+import { Dashboard } from './src/screens/Dashboard';
 
 export default function App() {
-  const [IsReady, SetIsReady] = useState(false);
+  const [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_700Bold,
+  });
 
-  const LoadFonts = async () => {
-    await useFonts();
-  };
-
-  if (!IsReady) {
-    return (
-      <AppLoading
-        startAsync={LoadFonts}
-        onFinish={() => SetIsReady(true)}
-        onError={() => { }}
-      />
-    );
+  if (!fontsLoaded) {
+    return <AppLoading />;
   }
 
   return (
     <ThemeProvider theme={theme}>
       <Dashboard />
     </ThemeProvider>
-  )
+  );
 }
