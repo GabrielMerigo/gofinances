@@ -16,4 +16,4 @@ export default {
     text: '#969CB2',
     background: '#F0F2F5'
   }
-} as const
+}

@@ -6,11 +6,11 @@ export const Container = styled.View`
   align-items: center;
 
   background-color: ${({ theme }) => theme.colors.background};
-  
 `
 
 export const Title = styled.Text`
   font-size: 24px;
   font-weight: bold;
-  color: ${({ theme }) => theme.colors.background};;
+  color: ${({ theme }) => theme.colors.title};
+  font-family: 'Poppins_bold';
 `
