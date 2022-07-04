@@ -1,7 +1,5 @@
 import React from "react";
 import * as S from './styles'
-import { Feather } from '@expo/vector-icons';
-
 
 export function Dashboard() {
   return (
