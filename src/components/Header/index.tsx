@@ -2,7 +2,7 @@ import * as S from './styles'
 
 export function Header() {
   return (
-    <S.Header >
+    <S.Header>
       <S.UserWrapper>
         <S.UserInfo>
           <S.Photo
@@ -15,6 +15,6 @@ export function Header() {
         </S.UserInfo>
         <S.Icon name="power" />
       </S.UserWrapper>
-    </S.Header >
+    </S.Header>
   )
 }

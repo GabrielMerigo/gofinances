@@ -11,7 +11,7 @@ export const Header = styled.View`
     align-items: center;
     flex-direction: row;
   `}
-`
+`;
 
 export const UserWrapper = styled.View`
   width: 100%;
@@ -19,7 +19,7 @@ export const UserWrapper = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-`
+`;
 
 export const UserInfo = styled.View`
   flex-direction: row;
@@ -40,7 +40,6 @@ export const User = styled.View`
 export const UserGreeting = styled.Text`
   ${({ theme }) => css`
     color: ${theme.colors.shape};
-
     font-size: ${RFValue(18)}px;
     font-family: ${theme.fonts.regular};
   `}
