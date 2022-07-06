@@ -10,6 +10,8 @@ export const Header = styled.View`
     justify-content: center;
     align-items: center;
     flex-direction: row;
+    align-items: flex-start;
+    padding-top: 60px;
   `}
 `;
 
