@@ -1,7 +1,7 @@
 import styled, { css, DefaultTheme } from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Feather } from '@expo/vector-icons';
-import {HighlightCardProps} from './index'
+import { HighlightCardProps } from './index'
 
 type Props = Pick<HighlightCardProps, 'type'>
 
