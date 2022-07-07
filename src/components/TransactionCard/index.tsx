@@ -19,6 +19,8 @@ type TransactionCardProps = {
 }
 
 export function TransactionCard({ data }: TransactionCardProps) {
+
+
   return (
     <S.Container>
       <S.Title>{data.title}</S.Title>
