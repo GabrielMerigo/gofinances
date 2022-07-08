@@ -1,6 +1,7 @@
-import styled, { css, DefaultTheme } from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Feather } from '@expo/vector-icons';
+import { Data } from '.';
 
 export const Container = styled.View`
   ${({ theme }) => css`
@@ -19,22 +20,23 @@ export const Title = styled.Text`
   `}
 `;
 
-export const Amount = styled.Text`
-  ${({ theme }) => css`
+type AmountProps = Pick<Data, 'type'>
+
+export const Amount = styled.Text<AmountProps>`
+  ${({ theme, type }) => css`
     font-size: ${RFValue(20)}px;
     margin-top: 2px;
-    font-family: ${theme.fonts.regular};
+    font-family: ${theme.fonts.regular}; 
+    color: ${type === 'positive' ? theme.colors.success : theme.colors.attention};
   `}
 `;
 
 export const Footer = styled.View`
-  ${({ theme }) => css`
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
-    margin-top: 19px;
-  `}
+  margin-top: 19px;
 `;
 
 export const Category = styled.View`

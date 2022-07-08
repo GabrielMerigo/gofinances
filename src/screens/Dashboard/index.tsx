@@ -1,13 +1,19 @@
 import React from "react";
 import { Header } from "../../components/Header";
 import { HighlightCard } from "../../components/HighlightCard";
-import { TransactionCard } from "../../components/TransactionCard";
+import { TransactionCardProps, TransactionCard } from "../../components/TransactionCard";
 import * as S from './styles'
 
+export interface DataListProps extends TransactionCardProps {
+  id: string
+}
+
 export function Dashboard() {
-  const data = [
+  const data: DataListProps[] = [
     {
+      id: '1',
       title: "Desenvolvimento de site",
+      type: 'positive',
       amount: "R$ 12.000,00",
       category: {
         name: 'Vendas',
@@ -16,8 +22,10 @@ export function Dashboard() {
       date: "13/12/2020"
     },
     {
-      title: "Desenvolvimento de site",
-      amount: "R$ 12.000,00",
+      id: '2',
+      title: "Conta de luz",
+      amount: "R$ 590,00",
+      type: 'negative',
       category: {
         name: 'Vendas',
         icon: 'dollar-sign'
@@ -25,22 +33,26 @@ export function Dashboard() {
       date: "13/12/2020"
     },
     {
-      title: "Desenvolvimento de site",
-      amount: "R$ 12.000,00",
+      id: '3',
+      title: "Hamburgueria Pizzy",
+      amount: "R$ 59,00",
+      type: 'positive',
       category: {
-        name: 'Vendas',
-        icon: 'dollar-sign'
+        name: 'Alimentação',
+        icon: 'coffee'
       },
-      date: "13/12/2020"
+      date: "10/12/2020"
     },
     {
-      title: "Desenvolvimento de site",
-      amount: "R$ 12.000,00",
+      id: '4',
+      title: "Aluguel do apartamento",
+      amount: "R$ 1.200,00",
+      type: 'positive',
       category: {
-        name: 'Vendas',
-        icon: 'dollar-sign'
+        name: 'Casa',
+        icon: 'shopping-bag'
       },
-      date: "13/12/2020"
+      date: "10/12/2020"
     },
   ];
 
@@ -58,8 +70,8 @@ export function Dashboard() {
 
         <S.TransactionList
           data={data}
+          keyExtractor={item => item.id}
           renderItem={({ item }) => <TransactionCard data={item} />}
-          showsVerticalScrollIndicator={false}
         />
 
       </S.Transaction>
