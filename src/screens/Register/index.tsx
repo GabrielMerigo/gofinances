@@ -18,7 +18,6 @@ export function Register() {
         <S.Title>Register</S.Title>
       </S.Header>
 
-
       <S.Form>
         <S.Fields>
           <Input
@@ -27,7 +26,6 @@ export function Register() {
           <Input
             placeholder="Price"
           />
-
           <S.TransactionTypes>
             <TransactionTypeButton
               type="up"
