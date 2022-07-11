@@ -13,6 +13,7 @@ export type TransactionCardProps = {
   amount: string;
   category: Category;
   date: string;
+  e: React.FormEvent<HTMLInputElement>;
 }
 
 type Props = {
@@ -20,6 +21,7 @@ type Props = {
 }
 
 export function TransactionCard({ data }: Props) {
+
 
   return (
     <S.Container>
