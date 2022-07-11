@@ -21,8 +21,6 @@ type Props = {
 }
 
 export function TransactionCard({ data }: Props) {
-
-
   return (
     <S.Container>
       <S.Title>{data.title}</S.Title>
