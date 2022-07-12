@@ -12,6 +12,7 @@ export const Container = styled(TextInput)`
     font-family: ${theme.fonts.medium};
     color: ${theme.colors.text_dark};
     border-radius: 5px;
+    
     margin-bottom: 8px;
   `}
 `

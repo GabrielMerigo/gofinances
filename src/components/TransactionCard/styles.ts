@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Feather } from '@expo/vector-icons';
-import { Data } from '.';
+import { TransactionCardProps } from '.';
 
 export const Container = styled.View`
   ${({ theme }) => css`
@@ -20,7 +20,7 @@ export const Title = styled.Text`
   `}
 `;
 
-type AmountProps = Pick<Data, 'type'>
+type AmountProps = Pick<TransactionCardProps, 'type'>
 
 export const Amount = styled.Text<AmountProps>`
   ${({ theme, type }) => css`
