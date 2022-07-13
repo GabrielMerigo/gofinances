@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { Modal } from 'react-native'
+import { InputForm } from '../../components/InputForm'
 import { Button } from "../../components/Button";
 import { CategorySelectButton } from "../../components/CategorySelectButton";
-import { Input } from "../../components/Input";
 import { TransactionTypeButton } from "../../components/TransactionTypeButton";
 import { CategorySelect } from "../CategorySelect";
 
 import * as S from "./styles"
+import { useForm } from "react-hook-form";
+
+type FormData = {
+  name: string;
+  amount: string;
+}
 
 export function Register() {
   const [transactionType, setTransactionType] = useState('');
@@ -14,7 +20,12 @@ export function Register() {
   const [category, setCategory] = useState({
     key: 'category',
     name: 'Categoria'
-  })
+  });
+
+  const {
+    control,
+    handleSubmit
+  } = useForm();
 
   function handleTransactionTypeSelect(type: 'up' | 'down') {
     setTransactionType(type)
@@ -29,6 +40,15 @@ export function Register() {
     setCategoryModalOpen(false);
   }
 
+  function handleRegister(form: Partial<FormData>) {
+    const data = {
+      name: form.name,
+      amount: form.amount,
+      transactionType,
+      category: category.key
+    }
+  }
+
   return (
     <S.Container>
       <S.Header>
@@ -37,12 +57,19 @@ export function Register() {
 
       <S.Form>
         <S.Fields>
-          <Input
+          <InputForm
             placeholder="Name"
+            control={control}
+            name="name"
           />
-          <Input
-            placeholder="Price"
+
+          <InputForm
+            placeholder="Amount"
+            control={control}
+            name="amount"
           />
+
+
           <S.TransactionTypes>
             <TransactionTypeButton
               type="up"
@@ -63,7 +90,10 @@ export function Register() {
           />
         </S.Fields>
 
-        <Button title="Submit" />
+        <Button
+          onPress={handleSubmit(handleRegister)}
+          title="Submit"
+        />
       </S.Form>
 
       <Modal visible={categoryModalOpen}>

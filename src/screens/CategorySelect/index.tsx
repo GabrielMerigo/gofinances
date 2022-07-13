@@ -26,7 +26,6 @@ export function CategorySelect({
     setCategory(category)
   }
 
-
   return (
     <S.Container>
       <S.Header>
