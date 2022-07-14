@@ -9,11 +9,23 @@ import { CategorySelect } from "../CategorySelect";
 import * as S from "./styles"
 import * as Yup from 'yup';
 import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
 
 type FormData = {
   name: string;
   amount: string;
 }
+
+const schema = Yup.object().shape({
+  name: Yup
+    .string()
+    .required('Name is required'),
+  amount: Yup
+    .number()
+    .typeError('The amount cannot be a number')
+    .positive('The amount cannot negative')
+    .required(' The amount is required')
+})
 
 export function Register() {
   const [transactionType, setTransactionType] = useState('');
@@ -25,8 +37,11 @@ export function Register() {
 
   const {
     control,
-    handleSubmit
-  } = useForm();
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(schema)
+  });
 
   function handleTransactionTypeSelect(type: 'up' | 'down') {
     setTransactionType(type)
@@ -65,6 +80,7 @@ export function Register() {
           <S.Fields>
             <InputForm
               placeholder="Name"
+              error={(errors?.amount?.message as any)}
               control={control}
               name="name"
               autoCapitalize="sentences"
@@ -72,6 +88,7 @@ export function Register() {
             />
 
             <InputForm
+              error={(errors?.amount?.message as any)}
               placeholder="Amount"
               control={control}
               name="amount"

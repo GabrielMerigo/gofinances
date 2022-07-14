@@ -3,14 +3,15 @@ import * as S from './styles';
 
 import { Input } from '../Input';
 import { TextInputProps } from "react-native";
-import { Control, Controller } from "react-hook-form";
+import { Control, Controller, DeepRequired, FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
 
 interface InputFormProps extends TextInputProps {
   control: Control;
   name: string;
+  error: string;
 }
 
-export function InputForm({ control, name, ...rest }: InputFormProps) {
+export function InputForm({ control, name, error, ...rest }: InputFormProps) {
   return (
     <S.Container>
       <Controller
@@ -24,6 +25,7 @@ export function InputForm({ control, name, ...rest }: InputFormProps) {
         )}
         name={name}
       />
+      {!!error && <S.Error>{error}</S.Error>}
     </S.Container>
   )
 }
