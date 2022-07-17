@@ -1,8 +1,10 @@
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { Feather } from '@expo/vector-icons';
 import styled, { css } from 'styled-components/native';
+import { BorderlessButton } from 'react-native-gesture-handler'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
-export const Header = styled.View`
+export const Header = styled(GestureHandlerRootView)`
   ${({ theme }) => css`
     width: 100%;
     height: ${RFPercentage(42)}px;
@@ -61,3 +63,5 @@ export const Icon = styled<any>(Feather)`
     font-size: ${RFValue(24)}px;
   `}
 `;
+
+export const LogoutButton = styled(BorderlessButton)<any>``;
