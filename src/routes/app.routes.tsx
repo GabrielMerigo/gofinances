@@ -4,58 +4,34 @@ import { Dashboard } from '../screens/Dashboard';
 import { Register } from '../screens/Register';
 import { Text } from "react-native";
 import theme from "../global/theme/theme";
-import * as S from './styles'
+import { IconTabBottom } from "../components/IconTabBottom";
+import { LabelTabBottom } from "../components/LabelTabBottom";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
 export function AppRoutes() {
   return (
-    <Navigator defaultScreenOptions={{
-      tabBarBadgeStyle: {
-        backgroundColor: 'red'
-      }
-    }}>
+    <Navigator>
       <Screen
         options={{
-          tabBarLabel: ({ focused, position }) =>
-            <Text style={{
-              color: focused ? theme.colors.secondary : theme.colors.text_dark,
-              fontFamily: theme.fonts.regular,
-              fontSize: 14
-            }}>Dashboard</Text>,
-          tabBarIcon: ({ focused }) => (
-            <S.Icon focused={focused} name="list" color={theme.colors.secondary} />
-          )
+          tabBarLabel: ({ focused }: any) => <LabelTabBottom focused={focused} theme={theme} label="Dashboard" />,
+          tabBarIcon: ({ focused }) => <IconTabBottom focused={focused} theme={theme} nameIcon="list" />
         }}
-        name="List"
+        name="Dashboard"
         component={Dashboard}
       />
       <Screen
         options={{
-          tabBarLabel: ({ focused }: any) =>
-            <Text style={{
-              color: focused ? theme.colors.secondary : theme.colors.text_dark,
-              fontFamily: theme.fonts.regular,
-              fontSize: 14
-            }}>Register</Text>,
-          tabBarIcon: ({ focused }: any) => (
-            <S.Icon focused={focused} name="dollar-sign" color={theme.colors.secondary} />
-          )
+          tabBarLabel: ({ focused }: any) => <LabelTabBottom focused={focused} theme={theme} label="Register" />,
+          tabBarIcon: ({ focused }) => <IconTabBottom focused={focused} theme={theme} nameIcon="dollar-sign" />
         }}
         name="Register"
         component={Register}
       />
       <Screen
         options={{
-          tabBarLabel: ({ focused }) =>
-            <Text style={{
-              color: focused ? theme.colors.secondary : theme.colors.text_dark,
-              fontFamily: theme.fonts.regular,
-              fontSize: 14
-            }}>Summary</Text>,
-          tabBarIcon: ({ focused }) => (
-            <S.Icon focused={focused} name="pie-chart" color={theme.colors.secondary} />
-          )
+          tabBarLabel: ({ focused }: any) => <LabelTabBottom focused={focused} theme={theme} label="Summary" />,
+          tabBarIcon: ({ focused }) => <IconTabBottom focused={focused} theme={theme} nameIcon="pie-chart" />
         }}
         name="Summary"
         component={Register}
