@@ -9,8 +9,6 @@ import {
 
 import AppLoading from 'expo-app-loading';
 import theme from './src/global/theme/theme';
-import { CategorySelect } from './src/screens/CategorySelect';
-import { Register } from './src/screens/Register';
 import { NavigationContainer } from '@react-navigation/native';
 import { AppRoutes } from './src/routes/app.routes';
 
