@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { InputForm } from '../../components/InputForm'
 import { Button } from "../../components/Button";
@@ -16,14 +16,14 @@ import uuid from 'react-native-uuid';
 import { useNavigation } from '@react-navigation/native';
 
 type FormData = {
-  name: string;
+  title: string;
   amount: string;
 }
 
 const schema = Yup.object().shape({
-  name: Yup
+  title: Yup
     .string()
-    .required('Name is required'),
+    .required('Title is required'),
   amount: Yup
     .number()
     .typeError('The amount cannot be a number')
@@ -32,7 +32,6 @@ const schema = Yup.object().shape({
 })
 
 export function Register() {
-  const collectionKey = '@gofinances:transactions';
   const [transactionType, setTransactionType] = useState('');
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
   const [category, setCategory] = useState({
@@ -64,12 +63,13 @@ export function Register() {
   }
 
   async function handleRegister(form: Partial<FormData>) {
+    const collectionKey = '@gofinances:transactions';
     if (!transactionType) return Alert.alert('You should select a transaction type');
     if (category.key === 'category') return Alert.alert('You should select a category')
 
     const newTransaction = {
       id: String(uuid.v4()),
-      name: form.name,
+      title: form.title,
       amount: form.amount,
       transactionType,
       category: category.key,
@@ -86,12 +86,12 @@ export function Register() {
 
       await AsyncStorage.setItem(collectionKey, JSON.stringify(transactions))
       setTransactionType('');
-      useState({
+      setCategory({
         key: 'category',
         name: 'Categoria'
       });
       reset()
-      navigate("List" as never, {} as never);
+      navigate("Dashboard" as never, {} as never);
     } catch (error) {
       console.error(error);
       Alert.alert('Ops... something went wrong')

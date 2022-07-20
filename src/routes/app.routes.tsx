@@ -13,10 +13,10 @@ export function AppRoutes() {
     <Navigator>
       <Screen
         options={{
-          tabBarLabel: ({ focused }: any) => <LabelTabBottom focused={focused} theme={theme} label="List" />,
+          tabBarLabel: ({ focused }: any) => <LabelTabBottom focused={focused} theme={theme} label="Dashboard" />,
           tabBarIcon: ({ focused }) => <IconTabBottom focused={focused} theme={theme} nameIcon="list" />
         }}
-        name="List"
+        name="Dashboard"
         component={Dashboard}
       />
       <Screen
