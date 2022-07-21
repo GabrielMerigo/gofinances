@@ -40,8 +40,8 @@ export function Dashboard() {
         }
       })
 
-      console.log(transactionFormatted)
-      setData(transactionFormatted);
+    console.log(transactionFormatted);
+    setData(transactionFormatted);
   }
 
   useEffect(() => {

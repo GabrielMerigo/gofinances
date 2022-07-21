@@ -8,7 +8,7 @@ type Category = {
 }
 
 export type TransactionCardProps = {
-  type: 'positive' | 'negative'
+  type: 'up' | 'down'
   title: string;
   amount: string;
   category: Category;
@@ -19,17 +19,35 @@ type Props = {
   data: TransactionCardProps;
 }
 
+type Icons = {
+  purchases: string;
+  food: string;
+  salary: string;
+  car: string;
+  leisure: string;
+  studies: string;
+}
+
+const icons: Icons = {
+  purchases: 'shopping-bag',
+  food: 'coffee',
+  salary: 'dollar-sign',
+  car: 'crosshair',
+  leisure: 'heart',
+  studies: 'book'
+}
+
 export function TransactionCard({ data }: Props) {
   return (
     <S.Container>
       <S.Title>{data.title}</S.Title>
       <S.Amount type={data.type}>
-        {data.type === 'negative' && '- '}
+        {data.type === 'down' && '- '}
         {data.amount}
       </S.Amount>
       <S.Footer>
         <S.Category>
-          <S.Icon name={data.category.icon} />
+          <S.Icon name={icons[data.category.icon as keyof Icons]} />
           <S.CategoryName>
             {data.category.name}
           </S.CategoryName>

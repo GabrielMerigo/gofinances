@@ -27,7 +27,7 @@ export const Amount = styled.Text<AmountProps>`
     font-size: ${RFValue(20)}px;
     margin-top: 2px;
     font-family: ${theme.fonts.regular}; 
-    color: ${type === 'positive' ? theme.colors.success : theme.colors.attention};
+    color: ${type === 'up' ? theme.colors.success : theme.colors.attention};
   `}
 `;
 

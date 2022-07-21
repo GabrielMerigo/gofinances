@@ -14,6 +14,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert, Keyboard, Modal, TouchableWithoutFeedback } from 'react-native'
 import uuid from 'react-native-uuid';
 import { useNavigation } from '@react-navigation/native';
+import { TransactionCardProps } from "../../components/TransactionCard";
 
 type FormData = {
   title: string;
@@ -43,8 +44,8 @@ export function Register() {
 
   const {
     control,
-    handleSubmit,
     formState: { errors },
+    getValues,
     reset
   } = useForm({
     resolver: yupResolver(schema)
@@ -62,18 +63,22 @@ export function Register() {
     setCategoryModalOpen(false);
   }
 
-  async function handleRegister(form: Partial<FormData>) {
+  async function handleRegister() {
     const collectionKey = '@gofinances:transactions';
     if (!transactionType) return Alert.alert('You should select a transaction type');
     if (category.key === 'category') return Alert.alert('You should select a category')
+    const { name, amount } = getValues();
 
     const newTransaction = {
       id: String(uuid.v4()),
-      title: form.title,
-      amount: form.amount,
-      transactionType,
-      category: category.key,
-      date: new Date()
+      title: name,
+      amount: amount,
+      type: (transactionType as 'up' | 'down'),
+      category: {
+        name: category.name,
+        icon: category.key
+      },
+      date: (new Date() as any)
     }
 
     try {
@@ -84,14 +89,15 @@ export function Register() {
         newTransaction
       ]
 
-      await AsyncStorage.setItem(collectionKey, JSON.stringify(transactions))
+      await AsyncStorage.setItem(collectionKey, JSON.stringify(transactions));
       setTransactionType('');
       setCategory({
         key: 'category',
         name: 'Categoria'
       });
-      reset()
-      navigate("Dashboard" as never, {} as never);
+
+      reset();
+      navigate("dashboard" as never, {} as never);
     } catch (error) {
       console.error(error);
       Alert.alert('Ops... something went wrong')
@@ -146,7 +152,7 @@ export function Register() {
           </S.Fields>
 
           <Button
-            onPress={handleSubmit((form) => handleRegister(form))}
+            onPress={() => handleRegister()}
             title="Submit"
           />
         </S.Form>

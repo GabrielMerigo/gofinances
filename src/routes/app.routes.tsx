@@ -16,7 +16,7 @@ export function AppRoutes() {
           tabBarLabel: ({ focused }: any) => <LabelTabBottom focused={focused} theme={theme} label="Dashboard" />,
           tabBarIcon: ({ focused }) => <IconTabBottom focused={focused} theme={theme} nameIcon="list" />
         }}
-        name="Dashboard"
+        name="dashboard"
         component={Dashboard}
       />
       <Screen
@@ -24,7 +24,7 @@ export function AppRoutes() {
           tabBarLabel: ({ focused }: any) => <LabelTabBottom focused={focused} theme={theme} label="Register" />,
           tabBarIcon: ({ focused }) => <IconTabBottom focused={focused} theme={theme} nameIcon="dollar-sign" />
         }}
-        name="Register"
+        name="register"
         component={Register}
       />
       <Screen
@@ -32,7 +32,7 @@ export function AppRoutes() {
           tabBarLabel: ({ focused }: any) => <LabelTabBottom focused={focused} theme={theme} label="Summary" />,
           tabBarIcon: ({ focused }) => <IconTabBottom focused={focused} theme={theme} nameIcon="pie-chart" />
         }}
-        name="Summary"
+        name="summary"
         component={Register}
       />
     </Navigator>
