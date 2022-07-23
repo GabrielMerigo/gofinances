@@ -5,13 +5,15 @@ import { TransactionCardProps, TransactionCard } from "../../components/Transact
 import * as S from './styles'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native'
-
+import { ActivityIndicator } from 'react-native'
+import theme from "../../global/theme/theme";
 export interface DataListProps extends TransactionCardProps {
   id: string
 }
 
 type HighlightProps = {
-  amount: string
+  amount: string;
+  lastTransaction?: string;
 }
 
 type HighlightData = {
@@ -23,11 +25,23 @@ type HighlightData = {
 export function Dashboard() {
   const [transactions, setTransactions] = useState<DataListProps[]>([]);
   const [highlightData, setHighlightData] = useState<HighlightData>({} as HighlightData);
+  const [isLoading, setIsLoading] = useState(true);
+
+
+  function getLastTransactionDate(data: DataListProps[], type: 'up' | 'negative') {
+    const lastTransaction = new Date(
+      Math.max.apply(Math, data
+        .filter(transaction => transaction.type === 'up')
+        .map(transaction => new Date(transaction.date).getTime())
+      ))
+
+    return `${lastTransaction.getDate()} de ${lastTransaction.toLocaleString('pt-BR', { month: 'long' })}`
+  }
 
   async function loadTransactions() {
     const collectionKey = '@gofinances:transactions';
     const response = await AsyncStorage.getItem(collectionKey);
-    const data = response ? JSON.parse(response) : [];
+    const data: DataListProps[] = response ? JSON.parse(response) : [];
 
     let entriesTotal = 0;
     let expensiveTotal = 0;
@@ -66,28 +80,34 @@ export function Dashboard() {
     setTransactions(transactionFormatted);
 
     const total = entriesTotal - expensiveTotal;
+    const lastTransactionEntries = getLastTransactionDate(data, 'up');
+    const lastTransactionExpensives = getLastTransactionDate(data, 'negative')
+    const totalInterval = `01 a ${lastTransactionExpensives}`
 
     setHighlightData({
       entries: {
         amount: entriesTotal.toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL'
-        })
+        }),
+        lastTransaction: `Última entrada dia ${lastTransactionEntries}`
       },
       expensives: {
         amount: expensiveTotal.toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL'
-        })
+        }),
+        lastTransaction: `Última entrada dia ${lastTransactionExpensives}`
       },
       total: {
         amount: total.toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL'
-        })
+        }),
+        lastTransaction: totalInterval
       }
     })
-
+    setIsLoading(false)
   }
 
   useEffect(() => {
@@ -101,21 +121,32 @@ export function Dashboard() {
   return (
     <S.Container>
       <Header />
-      <S.HighlightCards>
-        <HighlightCard type="up" title="Entradas" amount={highlightData.entries.amount} lastTransaction="17 de abril de 2021" />
-        <HighlightCard type="down" title="Saídas" amount={highlightData.expensives.amount} lastTransaction="28 de outubro de 2022" />
-        <HighlightCard type="total" title="Total" amount={highlightData.total.amount} lastTransaction="01 à 16 de abril" />
-      </S.HighlightCards>
+      {isLoading
+        ? (
+          <S.Loader>
+            <ActivityIndicator color={theme.colors.primary} />
+          </S.Loader>
+        )
+        : (
+          <>
+            <S.HighlightCards>
+              <HighlightCard type="up" title="Entradas" amount={highlightData.entries.amount} lastTransaction={highlightData.entries.lastTransaction} />
+              <HighlightCard type="down" title="Saídas" amount={highlightData.expensives.amount} lastTransaction={highlightData.expensives.lastTransaction} />
+              <HighlightCard type="total" title="Total" amount={highlightData.total.amount} lastTransaction={highlightData.total.lastTransaction} />
+            </S.HighlightCards>
 
-      <S.Transaction>
-        <S.Title>Dashboard</S.Title>
+            <S.Transaction>
+              <S.Title>Dashboard</S.Title>
 
-        <S.TransactionList
-          data={transactions}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => <TransactionCard data={item} />}
-        />
-      </S.Transaction>
+              <S.TransactionList
+                data={transactions}
+                keyExtractor={item => item.id}
+                renderItem={({ item }) => <TransactionCard data={item} />}
+              />
+            </S.Transaction>
+          </>
+        )
+      }
     </S.Container>
   )
 }

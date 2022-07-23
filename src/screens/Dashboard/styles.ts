@@ -40,3 +40,12 @@ export const TransactionList = styled(
   })`
   ${({ theme }) => css``}
 `;
+
+export const Loader = styled.View`
+  ${({ theme }) => css`
+    flex: 1;
+    color: ${theme.colors.primary};
+    justify-content: center;
+    align-items: center;
+  `}
+`;
