@@ -15,11 +15,7 @@ import { Alert, Keyboard, Modal, TouchableWithoutFeedback } from 'react-native'
 import uuid from 'react-native-uuid';
 import { useNavigation } from '@react-navigation/native';
 import { TransactionCardProps } from "../../components/TransactionCard";
-
-type FormData = {
-  title: string;
-  amount: string;
-}
+import { Heading } from "../../components/Heading";
 
 const schema = Yup.object().shape({
   title: Yup
@@ -107,9 +103,7 @@ export function Register() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <S.Container>
-        <S.Header>
-          <S.Title>Register</S.Title>
-        </S.Header>
+        <Heading children="Register" />
 
         <S.Form>
           <S.Fields>

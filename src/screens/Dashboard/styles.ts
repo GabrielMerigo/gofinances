@@ -38,7 +38,6 @@ export const TransactionList = styled(
   .attrs({
     showsVerticalScrollIndicator: false
   })`
-  ${({ theme }) => css``}
 `;
 
 export const Loader = styled.View`

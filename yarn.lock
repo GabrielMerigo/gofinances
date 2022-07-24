@@ -1747,7 +1747,7 @@
     query-string "^7.0.0"
     react-is "^16.13.0"
 
-"@react-navigation/native@^6.0.11":
+"@react-navigation/native@^6.0.9":
   version "6.0.11"
   resolved "https://registry.yarnpkg.com/@react-navigation/native/-/native-6.0.11.tgz#d221a5f6a5222187a09fc968d07d67d83ce70708"
   integrity sha512-z0YTB7Czdb9SNjxfzcFNB3Vym0qmUcxpiYGOOXX8PH0s+xlIs/w+2RVp6YAvAC48A30o7MMCYqy5OeR6lrtWHg==
