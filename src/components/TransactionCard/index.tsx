@@ -10,7 +10,7 @@ type Category = {
 export type TransactionCardProps = {
   type: 'up' | 'down'
   title: string;
-  amount: number;
+  amount: number | string;
   category: Category;
   date: string;
 }

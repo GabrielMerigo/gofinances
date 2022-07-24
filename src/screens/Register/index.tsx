@@ -14,7 +14,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert, Keyboard, Modal, TouchableWithoutFeedback } from 'react-native'
 import uuid from 'react-native-uuid';
 import { useNavigation } from '@react-navigation/native';
-import { TransactionCardProps } from "../../components/TransactionCard";
 import { Heading } from "../../components/Heading";
 
 const schema = Yup.object().shape({

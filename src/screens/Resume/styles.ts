@@ -10,3 +10,10 @@ export const Container = styled.View`
 export const Content = styled.ScrollView.attrs({
   contentContainerStyle: { padding: 24, flex: 1 },
 })``;
+
+export const ChartContainer = styled.View`
+  ${({ theme }) => css`
+    width: 100%;
+    align-items: center;
+  `}
+`;

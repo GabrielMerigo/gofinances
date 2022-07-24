@@ -6,12 +6,17 @@ import * as S from './styles'
 
 import { TransactionCardProps } from "../../components/TransactionCard";
 import { categories } from '../../utils/categories';
+import { VictoryPie } from 'victory-native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import theme from '../../global/theme/theme';
 
 
 type TotalByCategoryProps = {
   name: string,
-  total: string,
-  color: string
+  totalFomatted: string,
+  total: number,
+  color: string,
+  percent: string
 }
 
 export function Resume() {
@@ -21,8 +26,12 @@ export function Resume() {
     const collectionKey = '@gofinances:transactions';
     const response = await AsyncStorage.getItem(collectionKey);
     const responseFormatted: TransactionCardProps[] = response ? JSON.parse(response) : [];
+
     const expensives = responseFormatted.filter(expensive => expensive.type === 'down');
     const totalByCategory: TotalByCategoryProps[] = [];
+    const expensivesTotal = expensives.reduce((acc: number, expansive: TransactionCardProps) => {
+      return acc += Number(expansive.amount)
+    }, 0)
 
     categories.forEach((category, index) => {
       let categorySum = 0;
@@ -33,6 +42,7 @@ export function Resume() {
         }
       })
 
+      const percent = `${(categorySum / expensivesTotal * 100).toFixed(0)}%`;
 
       if (categorySum > 0) {
         const total = categorySum.toLocaleString('pt-BR', {
@@ -43,7 +53,9 @@ export function Resume() {
         totalByCategory.push({
           name: category.name,
           color: category.color,
-          total,
+          totalFomatted: total,
+          total: categorySum,
+          percent
         });
       }
 
@@ -61,10 +73,27 @@ export function Resume() {
       <Heading children="Resume per category" />
 
       <S.Content>
+        <S.ChartContainer>
+          <VictoryPie
+            data={totalByCategories}
+            colorScale={totalByCategories.map(category => category.color)}
+            x="percent"
+            y="total"
+            style={{
+              labels: {
+                fontSize: RFValue(18),
+                fontWeight: 'bold',
+                fill: theme.colors.shape
+              }
+            }}
+            labelRadius={80}
+          />
+        </S.ChartContainer>
+
         {totalByCategories.map((category, index) => (
           <HistoryCard
             key={index}
-            amount={category.total}
+            amount={category.totalFomatted}
             title={category.name}
             color={category.color}
           />
