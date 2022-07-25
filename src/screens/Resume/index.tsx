@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Heading } from '../../components/Heading';
 import { HistoryCard } from '../../components/HistoryCard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { addMonths, subMonths, format } from 'date-fns';
 import * as S from './styles'
 
 import { TransactionCardProps } from "../../components/TransactionCard";
@@ -19,20 +20,35 @@ export type TotalByCategoryProps = {
 }
 
 export function Resume() {
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [totalByCategories, setTotalByCategories] = useState<TotalByCategoryProps[]>([]);
+
+  function handleDateChange(action: 'next' | 'prev') {
+    if (action === 'next') {
+      setSelectedDate(addMonths(selectedDate, 1))
+    } else {
+      setSelectedDate(subMonths(selectedDate, 1))
+    }
+  }
 
   async function loadData() {
     const collectionKey = '@gofinances:transactions';
     const response = await AsyncStorage.getItem(collectionKey);
     const responseFormatted: TransactionCardProps[] = response ? JSON.parse(response) : [];
 
-    const expensives = responseFormatted.filter(expensive => expensive.type === 'down');
+    const expensives = responseFormatted.filter(expensive => 
+      expensive.type === 'down' &&
+      new Date(expensive.date).getMonth() === selectedDate.getMonth() &&
+      new Date(expensive.date).getFullYear() === selectedDate.getFullYear()
+    );
+
+
     const totalByCategory: TotalByCategoryProps[] = [];
     const expensivesTotal = expensives.reduce((acc: number, expansive: TransactionCardProps) => {
       return acc += Number(expansive.amount)
     }, 0)
 
-    categories.forEach((category, index) => {
+    categories.forEach((category) => {
       let categorySum = 0;
 
       expensives.forEach((expensive: TransactionCardProps) => {
@@ -65,7 +81,7 @@ export function Resume() {
 
   useEffect(() => {
     loadData();
-  }, [])
+  }, [selectedDate])
 
   return (
     <S.Container>
@@ -73,15 +89,15 @@ export function Resume() {
 
       <S.Content>
         <S.MonthSelect>
-          <S.MonthSelectButton>
+          <S.MonthSelectButton onPress={() => handleDateChange('prev')}>
             <S.MonthSelectIcon name="chevron-left" />
           </S.MonthSelectButton>
 
           <S.Month>
-            May
+            {format(selectedDate, 'MMMM, yyyy')}
           </S.Month>
 
-          <S.MonthSelectButton>
+          <S.MonthSelectButton onPress={() => handleDateChange('next')}>
             <S.MonthSelectIcon name="chevron-right" />
           </S.MonthSelectButton>
         </S.MonthSelect>
