@@ -10,8 +10,7 @@ import { VictoryPie } from 'victory-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import theme from '../../global/theme/theme';
 
-
-type TotalByCategoryProps = {
+export type TotalByCategoryProps = {
   name: string,
   totalFomatted: string,
   total: number,
@@ -73,6 +72,21 @@ export function Resume() {
       <Heading children="Resume per category" />
 
       <S.Content>
+        <S.MonthSelect>
+          <S.MonthSelectButton>
+            <S.MonthSelectIcon name="chevron-left" />
+          </S.MonthSelectButton>
+
+          <S.Month>
+            May
+          </S.Month>
+
+          <S.MonthSelectButton>
+            <S.MonthSelectIcon name="chevron-right" />
+          </S.MonthSelectButton>
+        </S.MonthSelect>
+
+
         <S.ChartContainer>
           <VictoryPie
             data={totalByCategories}
@@ -90,15 +104,19 @@ export function Resume() {
           />
         </S.ChartContainer>
 
-        {totalByCategories.map((category, index) => (
-          <HistoryCard
-            key={index}
-            amount={category.totalFomatted}
-            title={category.name}
-            color={category.color}
-          />
-        ))}
+        <S.HistoryCardsList
+          data={totalByCategories}
+          keyExtractor={(item) => item.totalFomatted}
+          renderItem={({ item }) =>
+            <HistoryCard
+              key={item.percent}
+              amount={item.totalFomatted}
+              title={item.name}
+              color={item.color}
+            />}
+        />
       </S.Content>
+
 
     </S.Container>
   )

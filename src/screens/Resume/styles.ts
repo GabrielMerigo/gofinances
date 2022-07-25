@@ -1,4 +1,8 @@
 import styled, { css } from "styled-components/native";
+import { FlatList, FlatListProps } from 'react-native';
+import { TotalByCategoryProps } from ".";
+import { Feather } from '@expo/vector-icons'
+import { RFValue } from "react-native-responsive-fontsize";
 
 export const Container = styled.View`
   ${({ theme }) => css`
@@ -7,13 +11,41 @@ export const Container = styled.View`
   `}
 `;
 
-export const Content = styled.ScrollView.attrs({
-  contentContainerStyle: { padding: 24, flex: 1 },
-})``;
+export const Content = styled.View`
+  padding: 24px;
+  flex: 1;
+`;
 
 export const ChartContainer = styled.View`
+  width: 100%;
+  align-items: center;
+`;
+
+export const HistoryCardsList = styled(
+  FlatList as new (props: FlatListProps<TotalByCategoryProps>) => FlatList<TotalByCategoryProps>)
+  .attrs({
+    showsVerticalScrollIndicator: false
+  })`
+`;
+
+export const MonthSelect = styled.View`
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+`;
+
+export const MonthSelectButton = styled.TouchableOpacity`
+`;
+
+export const MonthSelectIcon = styled<any>(Feather)`
+  font-size: ${RFValue(20)}px;
+`;
+
+export const Month = styled.Text`
   ${({ theme }) => css`
-    width: 100%;
-    align-items: center;
+    font-family: ${theme.fonts.regular};
+    font-size: ${RFValue(24)}px;
   `}
 `;
