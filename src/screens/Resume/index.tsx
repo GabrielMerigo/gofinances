@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Heading } from '../../components/Heading';
 import { HistoryCard } from '../../components/HistoryCard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { addMonths, subMonths, format } from 'date-fns';
+import { useFocusEffect } from '@react-navigation/native'
 import * as S from './styles'
 
 import { TransactionCardProps } from "../../components/TransactionCard";
@@ -10,6 +11,8 @@ import { categories } from '../../utils/categories';
 import { VictoryPie } from 'victory-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import theme from '../../global/theme/theme';
+import { ActivityIndicator } from 'react-native';
+import { setDefaultOptions } from 'date-fns/esm';
 
 export type TotalByCategoryProps = {
   name: string,
@@ -20,6 +23,7 @@ export type TotalByCategoryProps = {
 }
 
 export function Resume() {
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [totalByCategories, setTotalByCategories] = useState<TotalByCategoryProps[]>([]);
 
@@ -32,11 +36,12 @@ export function Resume() {
   }
 
   async function loadData() {
+    setIsLoading(false);
     const collectionKey = '@gofinances:transactions';
     const response = await AsyncStorage.getItem(collectionKey);
     const responseFormatted: TransactionCardProps[] = response ? JSON.parse(response) : [];
 
-    const expensives = responseFormatted.filter(expensive => 
+    const expensives = responseFormatted.filter(expensive =>
       expensive.type === 'down' &&
       new Date(expensive.date).getMonth() === selectedDate.getMonth() &&
       new Date(expensive.date).getFullYear() === selectedDate.getFullYear()
@@ -77,63 +82,71 @@ export function Resume() {
     })
 
     setTotalByCategories(totalByCategory)
+    setIsLoading(false);
   }
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     loadData();
-  }, [selectedDate])
+  }, [selectedDate]));
 
   return (
     <S.Container>
       <Heading children="Resume per category" />
 
-      <S.Content>
-        <S.MonthSelect>
-          <S.MonthSelectButton onPress={() => handleDateChange('prev')}>
-            <S.MonthSelectIcon name="chevron-left" />
-          </S.MonthSelectButton>
+      {isLoading ? (
+        <S.Loader>
+          <ActivityIndicator size={50} color={theme.colors.primary} />
+        </S.Loader>
+      ) : (
+        <>
 
-          <S.Month>
-            {format(selectedDate, 'MMMM, yyyy')}
-          </S.Month>
+          <S.Content>
+            <S.MonthSelect>
+              <S.MonthSelectButton onPress={() => handleDateChange('prev')}>
+                <S.MonthSelectIcon name="chevron-left" />
+              </S.MonthSelectButton>
 
-          <S.MonthSelectButton onPress={() => handleDateChange('next')}>
-            <S.MonthSelectIcon name="chevron-right" />
-          </S.MonthSelectButton>
-        </S.MonthSelect>
+              <S.Month>
+                {format(selectedDate, 'MMMM, yyyy')}
+              </S.Month>
 
-
-        <S.ChartContainer>
-          <VictoryPie
-            data={totalByCategories}
-            colorScale={totalByCategories.map(category => category.color)}
-            x="percent"
-            y="total"
-            style={{
-              labels: {
-                fontSize: RFValue(18),
-                fontWeight: 'bold',
-                fill: theme.colors.shape
-              }
-            }}
-            labelRadius={80}
-          />
-        </S.ChartContainer>
-
-        <S.HistoryCardsList
-          data={totalByCategories}
-          keyExtractor={(item) => item.totalFomatted}
-          renderItem={({ item }) =>
-            <HistoryCard
-              key={item.percent}
-              amount={item.totalFomatted}
-              title={item.name}
-              color={item.color}
-            />}
-        />
-      </S.Content>
+              <S.MonthSelectButton onPress={() => handleDateChange('next')}>
+                <S.MonthSelectIcon name="chevron-right" />
+              </S.MonthSelectButton>
+            </S.MonthSelect>
 
 
+            <S.ChartContainer>
+              <VictoryPie
+                data={totalByCategories}
+                colorScale={totalByCategories.map(category => category.color)}
+                x="percent"
+                y="total"
+                style={{
+                  labels: {
+                    fontSize: RFValue(18),
+                    fontWeight: 'bold',
+                    fill: theme.colors.shape
+                  }
+                }}
+                labelRadius={80}
+              />
+            </S.ChartContainer>
+
+            <S.HistoryCardsList
+              data={totalByCategories}
+              keyExtractor={(item) => item.totalFomatted}
+              renderItem={({ item }) =>
+                <HistoryCard
+                  key={item.percent}
+                  amount={item.totalFomatted}
+                  title={item.name}
+                  color={item.color}
+                />}
+            />
+          </S.Content>
+        </>
+      )}
     </S.Container>
   )
 }

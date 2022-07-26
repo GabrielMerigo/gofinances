@@ -49,3 +49,12 @@ export const Month = styled.Text`
     font-size: ${RFValue(24)}px;
   `}
 `;
+
+export const Loader = styled.View`
+  ${({ theme }) => css`
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    font-family: ${theme.fonts.regular};
+  `}
+`;

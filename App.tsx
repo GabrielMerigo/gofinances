@@ -2,6 +2,7 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import 'intl';
 import 'intl/locale-data/jsonp/pt-BR';
+import { StatusBar } from 'react-native';
 
 import {
   useFonts,
