@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Heading } from '../../components/Heading';
 import { HistoryCard } from '../../components/HistoryCard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,7 +12,6 @@ import { VictoryPie } from 'victory-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import theme from '../../global/theme/theme';
 import { ActivityIndicator } from 'react-native';
-import { setDefaultOptions } from 'date-fns/esm';
 
 export type TotalByCategoryProps = {
   name: string,
