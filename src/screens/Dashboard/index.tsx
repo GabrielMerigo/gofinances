@@ -130,7 +130,7 @@ export function Dashboard() {
         : (
           <>
             <S.HighlightCards>
-              <HighlightCard type="up" title="Entradas" amount={highlightData.entries.amount} lastTransaction={highlightData.entries.lastTransaction} />
+              <HighlightCard type="up" title="Entries" amount={highlightData.entries.amount} lastTransaction={highlightData.entries.lastTransaction} />
               <HighlightCard type="down" title="Saídas" amount={highlightData.expensives.amount} lastTransaction={highlightData.expensives.lastTransaction} />
               <HighlightCard type="total" title="Total" amount={highlightData.total.amount} lastTransaction={highlightData.total.lastTransaction} />
             </S.HighlightCards>
