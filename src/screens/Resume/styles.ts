@@ -15,6 +15,7 @@ export const Content = styled.View`
   padding: 24px;
   flex: 1;
 `;
+// 9690A8016184A6DA
 
 export const ChartContainer = styled.View`
   width: 100%;
