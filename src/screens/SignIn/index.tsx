@@ -8,8 +8,7 @@ import { SignInSocialButton } from '../../components/SignInSocialButton';
 import { useAuth } from '../../hooks/auth';
 
 export function SignIn() {
-  const { } = useAuth();
-
+  const { user } = useAuth();
 
   return (
     <S.Container>
