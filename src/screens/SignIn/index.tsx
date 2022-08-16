@@ -6,9 +6,20 @@ import GoogleSvg from '../../assets/google.svg'
 import { RFValue } from 'react-native-responsive-fontsize';
 import { SignInSocialButton } from '../../components/SignInSocialButton';
 import { useAuth } from '../../hooks/auth';
+import { Alert } from 'react-native';
 
 export function SignIn() {
-  const { user } = useAuth();
+  const { user, signWithGoogle } = useAuth();
+
+  async function handleSignInWithGoogle() {
+    try {
+      await signWithGoogle();
+
+    } catch (err) {
+      console.log(err)
+      Alert.alert('Não foi possível conenctar a conta google');
+    }
+  }
 
   return (
     <S.Container>
@@ -34,6 +45,7 @@ export function SignIn() {
       <S.Footer>
         <S.FooterWrapper>
           <SignInSocialButton
+            onPress={handleSignInWithGoogle}
             title="Entrar com Google"
             svg={GoogleSvg}
           />
