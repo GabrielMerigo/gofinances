@@ -33,6 +33,7 @@ type AuthResponse = {
   type: string;
 }
 
+
 export function AuthContextProvider({ children, }: AuthContextProviderProps) {
   const [user, setUser] = useState({} as User);
   const userKey = '@gofinances:user';
