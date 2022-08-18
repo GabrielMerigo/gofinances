@@ -12,9 +12,7 @@ import {
 
 import AppLoading from 'expo-app-loading';
 import theme from './src/global/theme/theme';
-import { NavigationContainer } from '@react-navigation/native';
-import { AppRoutes } from './src/routes/app.routes';
-import { SignIn } from './src/screens/SignIn';
+import { Routes } from './src/routes';
 import { AuthContextProvider } from './src/context/AuthContext';
 
 export default function App() {
@@ -31,10 +29,7 @@ export default function App() {
   return (
     <AuthContextProvider>
       <ThemeProvider theme={theme}>
-        <NavigationContainer>
-          {/* <AppRoutes /> */}
-          <SignIn />
-        </NavigationContainer>
+        <Routes />
       </ThemeProvider>
     </AuthContextProvider>
   );
