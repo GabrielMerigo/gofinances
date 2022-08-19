@@ -29,8 +29,9 @@ export function Dashboard() {
   const [transactions, setTransactions] = useState<DataListProps[]>([]);
   const [highlightData, setHighlightData] = useState<HighlightData>({} as HighlightData);
   const [isLoading, setIsLoading] = useState(true);
+  const { user } = useAuth();
 
-  function getLastTransactionDate(data: DataListProps[], type: 'up' | 'negative') {
+  function getLastTransactionDate(data: DataListProps[]) {
     const lastTransaction = new Date(
       Math.max.apply(Math, data
         .filter(transaction => transaction.type === 'up')
@@ -41,7 +42,7 @@ export function Dashboard() {
   }
 
   async function loadTransactions() {
-    const collectionKey = '@gofinances:transactions';
+    const collectionKey = `@gofinances:transactions_user:${user!.id}`;
     const response = await AsyncStorage.getItem(collectionKey);
     const data: DataListProps[] = response ? JSON.parse(response) : [];
 
@@ -82,8 +83,8 @@ export function Dashboard() {
     setTransactions(transactionFormatted);
 
     const total = entriesTotal - expensiveTotal;
-    const lastTransactionEntries = getLastTransactionDate(data, 'up');
-    const lastTransactionExpensives = getLastTransactionDate(data, 'negative')
+    const lastTransactionEntries = getLastTransactionDate(data);
+    const lastTransactionExpensives = getLastTransactionDate(data)
     const totalInterval = `01 a ${lastTransactionExpensives}`
 
     setHighlightData({

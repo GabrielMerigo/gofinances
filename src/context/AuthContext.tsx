@@ -35,13 +35,14 @@ type AuthResponse = {
   type: string;
 }
 
+// TODO: Criar exclusão de items de dashboard
+// TODO: Dar a possobilidade de se conectar em mais de uma conta
+// TODO: Formatar quando não há transações, colocar mensagem
 
 export function AuthContextProvider({ children, }: AuthContextProviderProps) {
   const [user, setUser] = useState({} as User);
   const [storageLoading, setStorageLoading] = useState<boolean>(false);
   const userKey = '@gofinances:user';
-
-  // TODO: USAR UseQuery para evitar criação de hook desncessário
 
   const loadUserStorageData = useCallback(async () => {
     try {
@@ -103,11 +104,14 @@ export function AuthContextProvider({ children, }: AuthContextProviderProps) {
       });
 
       if (credential) {
+        const name = String(credential.fullName?.givenName);
+        const photo = `https://ui-avatars.com/api/?name=${name}&length=1`
+
         const userLogged = {
           id: String(credential.user),
           email: String(credential!.email),
-          name: String(credential!.fullName!.givenName),
-          photo: undefined
+          name,
+          photo,
         }
 
         setUser(userLogged);

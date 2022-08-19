@@ -12,6 +12,7 @@ import { VictoryPie } from 'victory-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import theme from '../../global/theme/theme';
 import { ActivityIndicator } from 'react-native';
+import useAuth from "../../hooks/auth";
 
 export type TotalByCategoryProps = {
   name: string,
@@ -25,6 +26,7 @@ export function Resume() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [totalByCategories, setTotalByCategories] = useState<TotalByCategoryProps[]>([]);
+  const { user } = useAuth();
 
   function handleDateChange(action: 'next' | 'prev') {
     if (action === 'next') {
@@ -36,7 +38,7 @@ export function Resume() {
 
   async function loadData() {
     setIsLoading(false);
-    const collectionKey = '@gofinances:transactions';
+    const collectionKey = `@gofinances:transactions_user:${user!.id}`;
     const response = await AsyncStorage.getItem(collectionKey);
     const responseFormatted: TransactionCardProps[] = response ? JSON.parse(response) : [];
 

@@ -15,6 +15,7 @@ import { Alert, Keyboard, Modal, TouchableWithoutFeedback } from 'react-native'
 import uuid from 'react-native-uuid';
 import { useNavigation } from '@react-navigation/native';
 import { Heading } from "../../components/Heading";
+import useAuth from "../../hooks/auth";
 
 const schema = Yup.object().shape({
   title: Yup
@@ -35,6 +36,7 @@ export function Register() {
     name: 'Categoria'
   });
 
+  const { user } = useAuth();
   const { navigate } = useNavigation();
 
   const {
@@ -59,7 +61,7 @@ export function Register() {
   }
 
   async function handleRegister() {
-    const collectionKey = '@gofinances:transactions';
+    const collectionKey = `@gofinances:transactions_user:${user!.id}`;
     if (!transactionType) return Alert.alert('You should select a transaction type');
     if (category.key === 'category') return Alert.alert('You should select a category')
     const { name, amount } = getValues();

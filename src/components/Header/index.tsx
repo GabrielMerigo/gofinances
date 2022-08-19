@@ -2,18 +2,18 @@ import useAuth from '../../hooks/auth';
 import * as S from './styles'
 
 export function Header() {
-  const { signOut } = useAuth();
+  const { signOut, user } = useAuth();
 
   return (
     <S.Header>
       <S.UserWrapper>
         <S.UserInfo>
           <S.Photo
-            source={{ uri: 'https://avatars.githubusercontent.com/u/72055874?v=4' }}
+            source={{ uri: user?.photo }}
           />
           <S.User>
             <S.UserGreeting>Olá, </S.UserGreeting>
-            <S.UserName>Gabriel</S.UserName>
+            <S.UserName>{user?.name}</S.UserName>
           </S.User>
         </S.UserInfo>
         <S.LogoutButton onPress={signOut}>
