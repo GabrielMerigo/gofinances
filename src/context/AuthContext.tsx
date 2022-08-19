@@ -1,6 +1,5 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 import * as AuthSession from 'expo-auth-session';
-import { useQuery } from '@tanstack/react-query'
 
 import * as AppleAuthentication from 'expo-apple-authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -41,17 +40,17 @@ export function AuthContextProvider({ children, }: AuthContextProviderProps) {
 
   // TODO: USAR UseQuery para evitar criação de hook desncessário
 
-  async function loadUserStorageData() {
+  const loadUserStorageData = useCallback(async () => {
     const userStoraged = await AsyncStorage.getItem(userKey);
+    console.log(userStoraged, 'teste')
 
     if (userStoraged) {
       const userLogged = JSON.parse(userStoraged) as User;
       setUser(userLogged);
     }
-  }
+  }, [])
 
   useEffect(() => {
-    console.log('montou');
     loadUserStorageData();
   }, []);
 
@@ -69,14 +68,15 @@ export function AuthContextProvider({ children, }: AuthContextProviderProps) {
         const response = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${params.access_token}`);
         const useInfo = await response.json();
 
-        setUser({
+        const userLogged = {
           email: useInfo.email,
           id: useInfo.id,
           name: useInfo.given_name,
           photo: useInfo.picture
-        });
+        }
 
-        AsyncStorage.setItem(userKey, JSON.stringify(user));
+        setUser(userLogged);
+        await AsyncStorage.setItem(userKey, JSON.stringify(userLogged));
       }
 
     } catch (err) {
@@ -102,7 +102,7 @@ export function AuthContextProvider({ children, }: AuthContextProviderProps) {
         }
 
         setUser(userLogged);
-        AsyncStorage.setItem(userKey, JSON.stringify(user));
+        await AsyncStorage.setItem(userKey, JSON.stringify(userLogged));
       }
 
 

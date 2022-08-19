@@ -27,7 +27,6 @@ export function Dashboard() {
   const [highlightData, setHighlightData] = useState<HighlightData>({} as HighlightData);
   const [isLoading, setIsLoading] = useState(true);
 
-
   function getLastTransactionDate(data: DataListProps[], type: 'up' | 'negative') {
     const lastTransaction = new Date(
       Math.max.apply(Math, data
