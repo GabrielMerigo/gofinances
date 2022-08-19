@@ -1,6 +1,9 @@
+import useAuth from '../../hooks/auth';
 import * as S from './styles'
 
 export function Header() {
+  const { signOut } = useAuth();
+
   return (
     <S.Header>
       <S.UserWrapper>
@@ -13,7 +16,7 @@ export function Header() {
             <S.UserName>Gabriel</S.UserName>
           </S.User>
         </S.UserInfo>
-        <S.LogoutButton>
+        <S.LogoutButton onPress={signOut}>
           <S.Icon name="power" />
         </S.LogoutButton>
       </S.UserWrapper>

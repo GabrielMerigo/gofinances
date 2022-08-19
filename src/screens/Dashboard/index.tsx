@@ -7,6 +7,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native'
 import { ActivityIndicator } from 'react-native'
 import theme from "../../global/theme/theme";
+import useAuth from "../../hooks/auth";
+
+
 export interface DataListProps extends TransactionCardProps {
   id: string
 }

@@ -18,6 +18,8 @@ type AuthProviderProps = {
   user: User | undefined;
   signWithGoogle: () => Promise<void>;
   signWithApple: () => Promise<void>;
+  signOut: () => Promise<void>;
+  storageLoading: boolean;
 }
 
 export const AuthProvider = createContext({} as AuthProviderProps);
@@ -36,18 +38,25 @@ type AuthResponse = {
 
 export function AuthContextProvider({ children, }: AuthContextProviderProps) {
   const [user, setUser] = useState({} as User);
+  const [storageLoading, setStorageLoading] = useState<boolean>(false);
   const userKey = '@gofinances:user';
 
   // TODO: USAR UseQuery para evitar criação de hook desncessário
 
   const loadUserStorageData = useCallback(async () => {
-    const userStoraged = await AsyncStorage.getItem(userKey);
-    console.log(userStoraged, 'teste')
-
-    if (userStoraged) {
-      const userLogged = JSON.parse(userStoraged) as User;
-      setUser(userLogged);
+    try {
+      setStorageLoading(true);
+      const userStoraged = await AsyncStorage.getItem(userKey);
+      if (userStoraged) {
+        const userLogged = JSON.parse(userStoraged) as User;
+        setUser(userLogged);
+      }
+    } catch (err) {
+      throw new Error('Não há usuário');
+    } finally {
+      setStorageLoading(false);
     }
+
   }, [])
 
   useEffect(() => {
@@ -111,8 +120,21 @@ export function AuthContextProvider({ children, }: AuthContextProviderProps) {
     }
   }
 
+  async function signOut() {
+    setUser({} as User);
+    await AsyncStorage.removeItem(userKey);
+  }
+
+
   return (
-    <AuthProvider.Provider value={{ user, signWithGoogle, signWithApple }}>
+    <AuthProvider.Provider
+      value={{
+        user,
+        signWithGoogle,
+        signWithApple,
+        signOut,
+        storageLoading
+      }}>
       {children}
     </AuthProvider.Provider>
   )

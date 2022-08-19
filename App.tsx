@@ -14,6 +14,7 @@ import AppLoading from 'expo-app-loading';
 import theme from './src/global/theme/theme';
 import { Routes } from './src/routes';
 import { AuthContextProvider } from './src/context/AuthContext';
+import useAuth from './src/hooks/auth';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -22,7 +23,9 @@ export default function App() {
     Poppins_700Bold,
   });
 
-  if (!fontsLoaded) {
+  const { storageLoading } = useAuth();
+
+  if (!fontsLoaded || storageLoading) {
     return <AppLoading />;
   }
 
