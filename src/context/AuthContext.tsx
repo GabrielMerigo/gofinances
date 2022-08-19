@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import * as AuthSession from 'expo-auth-session';
+import { useQuery } from '@tanstack/react-query'
 
 import * as AppleAuthentication from 'expo-apple-authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -40,15 +41,18 @@ export function AuthContextProvider({ children, }: AuthContextProviderProps) {
 
   // TODO: USAR UseQuery para evitar criação de hook desncessário
 
-  useEffect(() => {
-    async function loadUserStorageData() {
-      const userStoraged = await AsyncStorage.getItem(userKey);
+  async function loadUserStorageData() {
+    const userStoraged = await AsyncStorage.getItem(userKey);
 
-      if (userStoraged) {
-        const userLogged = JSON.parse(userStoraged) as User;
-        setUser(userLogged);
-      }
+    if (userStoraged) {
+      const userLogged = JSON.parse(userStoraged) as User;
+      setUser(userLogged);
     }
+  }
+
+  useEffect(() => {
+    console.log('montou');
+    loadUserStorageData();
   }, []);
 
   async function signWithGoogle() {
