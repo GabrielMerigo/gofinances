@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 import * as AuthSession from 'expo-auth-session';
+import Google from 'expo-auth-session/providers/google';
 
 import * as AppleAuthentication from 'expo-apple-authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,6 +13,7 @@ type User = {
   id: string,
   name: string,
   photo: string | undefined,
+  access_token?: string
 }
 
 type AuthProviderProps = {
@@ -48,6 +50,7 @@ export function AuthContextProvider({ children, }: AuthContextProviderProps) {
     try {
       setStorageLoading(true);
       const userStoraged = await AsyncStorage.getItem(userKey);
+
       if (userStoraged) {
         const userLogged = JSON.parse(userStoraged) as User;
         setUser(userLogged);
@@ -82,7 +85,8 @@ export function AuthContextProvider({ children, }: AuthContextProviderProps) {
           email: useInfo.email,
           id: useInfo.id,
           name: useInfo.given_name,
-          photo: useInfo.picture
+          photo: useInfo.picture,
+          access_token: params.access_token
         }
 
         setUser(userLogged);
@@ -126,7 +130,12 @@ export function AuthContextProvider({ children, }: AuthContextProviderProps) {
 
   async function signOut() {
     setUser({} as User);
-    await AsyncStorage.removeItem(userKey);
+    const teste = await AuthSession.revokeAsync({
+      token: String(user.access_token),
+    }, { revocationEndpoint: 'https://oauth2.googleapis.com/revoke' })
+
+    console.log(teste, user.access_token)
+    return await AsyncStorage.removeItem(userKey);
   }
 
 

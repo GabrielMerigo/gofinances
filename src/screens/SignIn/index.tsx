@@ -9,7 +9,7 @@ import useAuth from '../../hooks/auth';
 import { Alert, Platform } from 'react-native';
 
 export function SignIn() {
-  const { signWithGoogle, signWithApple, user } = useAuth();
+  const { signWithGoogle, signWithApple } = useAuth();
 
   async function handleSignInWithGoogle() {
     try {
@@ -17,12 +17,8 @@ export function SignIn() {
     } catch (err) {
       console.log(err)
       Alert.alert('Não foi possível conenctar a conta google');
-
     }
   }
-
-  console.log(user)
-
 
   async function handleSignInWithApple() {
     try {
