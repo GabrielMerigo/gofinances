@@ -93,21 +93,21 @@ export function Dashboard() {
           style: 'currency',
           currency: 'BRL'
         }),
-        lastTransaction: `Última entrada dia ${lastTransactionEntries}`
+        lastTransaction: lastTransactionEntries.includes('NaN') ? 'Você não possui nenhuma entrada' : `Última entrada dia ${lastTransactionEntries}`
       },
       expensives: {
         amount: expensiveTotal.toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL'
         }),
-        lastTransaction: `Última entrada dia ${lastTransactionExpensives}`
+        lastTransaction: lastTransactionExpensives.includes('NaN') ? 'Você não possui nenhuma entrada' : `Última entrada dia ${lastTransactionExpensives}`
       },
       total: {
         amount: total.toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL'
         }),
-        lastTransaction: totalInterval
+        lastTransaction: lastTransactionEntries.includes('NaN') ? 'Você não possui nenhuma entrada' : totalInterval
       }
     })
     setIsLoading(false)

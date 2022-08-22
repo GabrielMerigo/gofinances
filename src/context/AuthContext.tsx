@@ -38,7 +38,6 @@ type AuthResponse = {
 }
 
 // TODO: Criar exclusão de items de dashboard
-// TODO: Dar a possobilidade de se conectar em mais de uma conta
 // TODO: Formatar quando não há transações, colocar mensagem
 
 export function AuthContextProvider({ children, }: AuthContextProviderProps) {
@@ -130,11 +129,10 @@ export function AuthContextProvider({ children, }: AuthContextProviderProps) {
 
   async function signOut() {
     setUser({} as User);
-    const teste = await AuthSession.revokeAsync({
+    await AuthSession.revokeAsync({
       token: String(user.access_token),
     }, { revocationEndpoint: 'https://oauth2.googleapis.com/revoke' })
 
-    console.log(teste, user.access_token)
     return await AsyncStorage.removeItem(userKey);
   }
 
