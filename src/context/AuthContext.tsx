@@ -38,7 +38,6 @@ type AuthResponse = {
 }
 
 // TODO: Criar exclusão de items de dashboard
-// TODO: Formatar quando não há transações, colocar mensagem
 
 export function AuthContextProvider({ children, }: AuthContextProviderProps) {
   const [user, setUser] = useState({} as User);
