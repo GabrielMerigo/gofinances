@@ -60,6 +60,7 @@ export function Register() {
     setCategoryModalOpen(false);
   }
 
+
   async function handleRegister() {
     const collectionKey = `@gofinances:transactions_user:${user!.id}`;
     if (!transactionType) return Alert.alert('You should select a transaction type');
@@ -108,24 +109,10 @@ export function Register() {
 
         <S.Form>
           <S.Fields>
-            <InputForm
-              placeholder="Name"
-              error={(errors?.amount?.message as any)}
-              control={control}
-              name="name"
-              autoCapitalize="sentences"
-              autoCorrect={false}
+            <CategorySelectButton
+              onPress={handleOpenSelectCategoryModal}
+              title={category.name}
             />
-
-            <InputForm
-              error={(errors?.amount?.message as any)}
-              placeholder="Amount"
-              control={control}
-              name="amount"
-              autoCorrect={false}
-              keyboardType="numeric"
-            />
-
             <S.TransactionTypes>
               <TransactionTypeButton
                 type="up"
@@ -140,10 +127,27 @@ export function Register() {
                 onPress={() => handleTransactionTypeSelect('down')}
               />
             </S.TransactionTypes>
-            <CategorySelectButton
-              onPress={handleOpenSelectCategoryModal}
-              title={category.name}
+
+            <InputForm
+              placeholder="Name"
+              error={(errors?.amount?.message as any)}
+              control={control}
+              name="name"
+              autoCapitalize="sentences"
+              autoCorrect={false}
             />
+
+            <InputForm
+              style={{ marginTop: 7 }}
+              error={(errors?.amount?.message as any)}
+              placeholder="Amount"
+              control={control}
+              name="amount"
+              autoCorrect={false}
+              keyboardType="numeric"
+            />
+
+
           </S.Fields>
 
           <Button
@@ -152,7 +156,7 @@ export function Register() {
           />
         </S.Form>
 
-        <Modal visible={categoryModalOpen}>
+        <Modal focusable visible={categoryModalOpen}>
           <CategorySelect
             catergory={category}
             setCategory={setCategory}

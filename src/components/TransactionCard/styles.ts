@@ -13,6 +13,12 @@ export const Container = styled.View`
   `}
 `;
 
+export const Header = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
 export const Title = styled.Text`
   ${({ theme }) => css`
     font-size: ${RFValue(20)}px;
@@ -48,6 +54,14 @@ export const Icon = styled<any>(Feather)`
   ${({ theme }) => css`
     font-size: ${RFValue(20)}px;
     color: ${theme.colors.text};
+  `}
+`;
+
+export const IconToRemove = styled<any>(Feather)`
+  ${({ theme }) => css`
+    font-size: ${RFValue(20)}px;
+    color: ${theme.colors.text};
+    margin-top: 5px;
   `}
 `;
 

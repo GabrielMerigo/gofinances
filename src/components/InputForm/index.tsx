@@ -3,7 +3,7 @@ import * as S from './styles';
 
 import { Input } from '../Input';
 import { TextInputProps } from "react-native";
-import { Control, Controller, DeepRequired, FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
 
 interface InputFormProps extends TextInputProps {
   control: Control;

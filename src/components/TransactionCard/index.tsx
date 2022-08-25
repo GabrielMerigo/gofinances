@@ -40,7 +40,10 @@ const icons: Icons = {
 export function TransactionCard({ data }: Props) {
   return (
     <S.Container>
-      <S.Title>{data.title}</S.Title>
+      <S.Header>
+        <S.Title>{data.title}</S.Title>
+        <S.IconToRemove name="x"></S.IconToRemove>
+      </S.Header>
       <S.Amount type={data.type}>
         {data.type === 'down' && '- '}
         {data.amount}
