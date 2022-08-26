@@ -1,4 +1,5 @@
 import React from "react";
+import { TouchableOpacity } from "react-native";
 
 import * as S from './styles';
 
@@ -8,15 +9,18 @@ type Category = {
 }
 
 export type TransactionCardProps = {
+  id: string;
   type: 'up' | 'down'
   title: string;
-  amount: number | string;
+  amountFormatted: string;
+  amount: number;
   category: Category;
   date: string;
 }
 
 type Props = {
   data: TransactionCardProps;
+  handleDelete: (id: string) => void;
 }
 
 type Icons = {
@@ -37,16 +41,19 @@ const icons: Icons = {
   studies: 'book'
 }
 
-export function TransactionCard({ data }: Props) {
+export function TransactionCard({ data, handleDelete }: Props) {
+
   return (
     <S.Container>
       <S.Header>
         <S.Title>{data.title}</S.Title>
-        <S.IconToRemove name="x"></S.IconToRemove>
+        <TouchableOpacity onPress={() => handleDelete(data.id)}>
+          <S.IconToRemove name="x"></S.IconToRemove>
+        </TouchableOpacity>
       </S.Header>
       <S.Amount type={data.type}>
         {data.type === 'down' && '- '}
-        {data.amount}
+        {data.amountFormatted}
       </S.Amount>
       <S.Footer>
         <S.Category>
