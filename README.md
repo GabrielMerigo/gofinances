@@ -46,5 +46,5 @@ This project is under the MIT license. See the [LICENSE](LICENSE.md) file for mo
 <div align="center">
   <small>Developed for Gabriel Merigo</small>
 
-  [![Linkedin Badge](https://img.shields.io/badge/-Thiago%20Silva-6633cc?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/rodrigo-gon%C3%A7alves-santana/)](https://www.linkedin.com/in/thiago-furtado-silva/) 
+  [![Linkedin Badge](https://img.shields.io/badge/-Gabriel%20Merigo-6633cc?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/rodrigo-gon%C3%A7alves-santana/)](https://www.linkedin.com/in/gabrielmerigo/) 
 </div>
