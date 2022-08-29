@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="GoFinances" height="80" title="GoFinances" src=".github/logo.png" />
+  <img alt="GoFinances" height="80" title="GoFinances" src="./logo.png" />
 </h1>
 
 <p align="center">
@@ -9,7 +9,7 @@
 </p>
 
 
-![cover](.github/banner.png)
+![cover](./banner.png)
 
 
 ## 💻 Projeto
