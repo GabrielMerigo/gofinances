@@ -9,22 +9,25 @@ import {
 export function Profile(){
   return (
     <View>
-      <Text>Perfil</Text>
+      <Text testID="text-title">Perfil</Text>
 
-      <TextInput 
+      <TextInput
+        testID="input-name"
         placeholder="Nome"
         autoCorrect={false}
+        value="Gabriel"
       />
 
       <TextInput
+        testID="input-surname"
         placeholder="Sobrenome"
+        value="Merigo"
       />
 
       <Button
         title="Salvar"
         onPress={() => {}}
       />
-
     </View>
   )
 }
