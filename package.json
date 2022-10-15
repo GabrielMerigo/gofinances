@@ -24,6 +24,7 @@
     "expo-app-loading": "~2.0.0",
     "expo-apple-authentication": "~4.2.1",
     "expo-auth-session": "~3.6.1",
+    "expo-crypto": "~10.2.0",
     "expo-font": "~10.1.0",
     "expo-google-app-auth": "~8.3.0",
     "expo-random": "~12.2.0",
@@ -50,6 +51,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@testing-library/jest-native": "^5.0.0",
+    "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/react-native": "^11.2.0",
     "@types/jest": "^29.1.2",
     "@types/react": "^18.0.15",
