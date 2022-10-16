@@ -38,7 +38,7 @@ type AuthResponse = {
 
 // TODO: Criar exclusão de items de dashboard
 
-export function AuthContextProvider({ children, }: AuthContextProviderProps) {
+export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState({} as User);
   const [storageLoading, setStorageLoading] = useState<boolean>(false);
   const userKey = '@gofinances:user';
@@ -91,6 +91,7 @@ export function AuthContextProvider({ children, }: AuthContextProviderProps) {
       }
 
     } catch (err) {
+      console.log(err)
       throw new Error('');
     }
   }
