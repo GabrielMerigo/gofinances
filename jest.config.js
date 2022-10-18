@@ -1,15 +1,11 @@
 module.exports = {
-  preset: "react-native",
-  testPathIgnorePatterns: [
-    "/node_modules/",
-    "/android",
-    "/ios",
-  ],
+  preset: 'jest-expo',
+  testPathIgnorePatterns: ['/node_modules/', '/android', '/ios'],
   transformIgnorePatterns: [
-    "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|react-native-responsive-fontsize|native-base|react-native-svg|expo-auth-session)"
+    'node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|react-native-responsive-fontsize|native-base|react-native-svg|expo-auth-session|@expo/vector-icons)'
   ],
   setupFilesAfterEnv: [
-    "@testing-library/jest-native/extend-expect",
-    "jest-styled-components"
+    '@testing-library/jest-native/extend-expect',
+    'jest-styled-components'
   ]
 }

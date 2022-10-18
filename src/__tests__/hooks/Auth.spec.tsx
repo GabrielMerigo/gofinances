@@ -1,36 +1,23 @@
+import { renderHook, act } from '@testing-library/react-hooks';
 import { AuthContextProvider } from '../../context/AuthContext';
 import useAuth from '../../hooks/auth';
-import { renderHook, act } from '@testing-library/react-hooks';
-import { startAsync } from 'expo-auth-session';
 
-
+const mockStartAsync = jest.fn();
 jest.mock('expo-auth-session', () => {
   return {
-    startAsync: () => ({
-      type: 'success',
-      params: {
-        access_token: 'my-access-token'
-      },
-      user: {
-        id: 'any_id',
-        email: 'gabriel.merigo@gmail.com',
-        name: 'Rodrigo',
-        photo: 'picture'
-      }
-    })
+    startAsync: () => mockStartAsync()
   }
 })
 
 jest.mock('expo-apple-authentication', () => ({}))
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
-  setItem: async () => {}
+  setItem: async () => { }
 }))
 
 describe('Auth hook', () => {
   it('should be able to sign in with Google Account existing', async () => {
-    const googleMocked = jest.mocked(startAsync as any);
-    googleMocked.mockReturnValue({
+    mockStartAsync.mockReturnValue({
       type: 'success',
       params: {
         access_token: 'my-access-token'
@@ -55,23 +42,22 @@ describe('Auth hook', () => {
       })
     })) as jest.Mock;
 
-    const { result } = renderHook(() => useAuth(), { wrapper: AuthContextProvider }); 
+    const { result } = renderHook(() => useAuth(), { wrapper: AuthContextProvider });
 
     await act(() => result.current.signWithGoogle());
-    expect(result.current.user?.email).toBe('gabriel.merigo@gmail.com')
+    expect(result.current.user?.email).toBe('userInfo.email')
   });
 
   it('should not connect  if cancel authcation with google', async () => {
-    const googleMocked = jest.mocked(startAsync as any);
-    googleMocked.mockReturnValue({
+    mockStartAsync.mockReturnValue({
       type: 'cancel',
     })
 
-    const { result } = renderHook(() => useAuth(), { wrapper: AuthContextProvider }); 
+    const { result } = renderHook(() => useAuth(), { wrapper: AuthContextProvider });
 
     await act(() => result.current.signWithGoogle());
     expect(result.current.user)
-    .not.toHaveProperty('id');
+      .not.toHaveProperty('id');
   });
 
 })

@@ -37,7 +37,7 @@ export function Register() {
   });
 
   const { user } = useAuth();
-  const { navigate } = useNavigation();
+  const navigation = useNavigation();
 
   const {
     control,
@@ -95,7 +95,7 @@ export function Register() {
       });
 
       reset();
-      navigate("dashboard" as never, {} as never);
+      navigation.navigate("dashboard" as never, {} as never);
     } catch (error) {
       console.error(error);
       Alert.alert('Ops... something went wrong')
@@ -110,6 +110,7 @@ export function Register() {
         <S.Form>
           <S.Fields>
             <CategorySelectButton
+              testID="button-category"
               onPress={handleOpenSelectCategoryModal}
               title={category.name}
             />
@@ -156,7 +157,7 @@ export function Register() {
           />
         </S.Form>
 
-        <Modal focusable visible={categoryModalOpen}>
+        <Modal testID="modal-ID" focusable visible={categoryModalOpen}>
           <CategorySelect
             catergory={category}
             setCategory={setCategory}
