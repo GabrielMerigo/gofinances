@@ -48,7 +48,7 @@ describe('Auth hook', () => {
     expect(result.current.user?.email).toBe('userInfo.email')
   });
 
-  it('should not connect  if cancel authcation with google', async () => {
+  it('should not connect if cancel authcation with google', async () => {
     mockStartAsync.mockReturnValue({
       type: 'cancel',
     })
@@ -56,8 +56,17 @@ describe('Auth hook', () => {
     const { result } = renderHook(() => useAuth(), { wrapper: AuthContextProvider });
 
     await act(() => result.current.signWithGoogle());
-    expect(result.current.user)
-      .not.toHaveProperty('id');
+    expect(result.current.user).not.toHaveProperty('id');
+  });
+
+  it('should be error with incorreclty Google Parameters', async () => {
+    const { result } = renderHook(() => useAuth(), { wrapper: AuthContextProvider });
+
+    try {
+      await act(() => result.current.signWithGoogle());
+    } catch {
+      expect(result.current.user).toEqual({})
+    }
   });
 
 })

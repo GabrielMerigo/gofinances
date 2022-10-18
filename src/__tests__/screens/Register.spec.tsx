@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import React from 'react';
 import { ThemeProvider } from 'styled-components/native';
 import theme from '../../global/theme/theme';
@@ -25,7 +25,7 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
 }))
 
 describe('Register Screen', () => {
-  it('should be open category modal when user click on button', () => {
+  it('should be open category modal when user click on button', async () => {
     render(
       <Register />,
       {
@@ -37,6 +37,8 @@ describe('Register Screen', () => {
     const buttonCategory = screen.getByTestId('button-category');
     fireEvent.press(buttonCategory);
 
-    expect(categoryModal.props.visible).toBeTruthy();
+    await waitFor(() => {
+      expect(categoryModal.props.visible).toBeTruthy();
+    })
   })
 })
