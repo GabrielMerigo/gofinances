@@ -17,7 +17,7 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
 
 describe('Auth hook', () => {
   it('should be able to sign in with Google Account existing', async () => {
-    mockStartAsync.mockReturnValue({
+    mockStartAsync.mockReturnValueOnce({
       type: 'success',
       params: {
         access_token: 'my-access-token'
@@ -49,7 +49,7 @@ describe('Auth hook', () => {
   });
 
   it('should not connect if cancel authcation with google', async () => {
-    mockStartAsync.mockReturnValue({
+    mockStartAsync.mockReturnValueOnce({
       type: 'cancel',
     })
 
