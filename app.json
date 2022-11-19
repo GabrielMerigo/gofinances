@@ -8,12 +8,8 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "bundlerIdentifier": "com.gofinances",
-      "buildNumber": "1.0.0"
-    },
     "android": {
-      "package": "com.gofinances",
+      "package": "com.gofinances_app",
       "versionCode": 1
     }
   }
