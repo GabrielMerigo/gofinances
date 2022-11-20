@@ -5,7 +5,6 @@ import * as AppleAuthentication from 'expo-apple-authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { CLIENT_ID } = process.env;
-const { REDIRECT_URI } = process.env;
 
 type User = {
   email: string
@@ -68,6 +67,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     try {
       const RESPONSE_TYPE = 'token';
       const SCOPE = encodeURI('profile email');
+      const REDIRECT_URI = 'https://auth.expo.io/@gabrielmerigo/gofinances';
 
       const parameters = `client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
       const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?${parameters}`; // Endpoint auth google

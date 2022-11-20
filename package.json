@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@expo-google-fonts/poppins": "^0.2.2",
+    "@expo/webpack-config": "^0.17.3",
     "@hookform/resolvers": "^2.9.5",
     "@react-native-async-storage/async-storage": "~1.17.3",
     "@react-navigation/bottom-tabs": "5",
@@ -63,6 +64,9 @@
     "jest-styled-components": "^7.1.1",
     "ts-jest": "26",
     "typescript": "~4.3.5"
+  },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
   },
   "private": true
 }
